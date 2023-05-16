@@ -42,6 +42,25 @@ public class ReflectionTest {
     log.info("result2={}", result2);
   }
 
+  @Test
+  void reflection2() throws Exception {
+    // 클래스 정보
+    Class classHello = Class.forName("hello.proxy.jdkdynamic.ReflectionTest$Hello");
+
+    Hello target = new Hello();
+    // callA 메서드 정보
+    dynamicCall(classHello.getMethod("callA"), target);
+
+    // callB 메서드 정보
+    dynamicCall(classHello.getMethod("callB"), target);
+  }
+
+  private void dynamicCall(Method method, Object target) throws Exception {
+    log.info("start");
+    Object result = method.invoke(target);
+    log.info("result={}", result);
+  }
+
   @Slf4j
   static class Hello {
     public String callA() {
